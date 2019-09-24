@@ -1,6 +1,6 @@
-from celery import Celery
 from celery import signals
 from celery import VERSION as celery_version
+from celery.app.registry import get_current_app
 from celery.bin import Option
 from pyramid.paster import bootstrap, setup_logging
 from pyramid_celery.loaders import INILoader
@@ -18,7 +18,7 @@ def add_preload_arguments(parser):
     )
 
 
-celery_app = Celery()
+celery_app = get_current_app()
 if celery_version.major > 3:
     celery_app.user_options['preload'].add(add_preload_arguments)
 else:
